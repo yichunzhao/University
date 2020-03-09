@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
@@ -26,15 +29,19 @@ public class DepartmentRepositoryTest {
     private EntityManager entityManager;
 
     @Before
-    @After
     public void setup() {
-        System.out.println("+++++++++++++ run jpa repository ++++++++++++++");
+        System.out.println("+++++++++++++ Start to Run Jpa Department repository ++++++++++++++");
+    }
+
+    @After
+    public void cleanUp() {
+        System.out.println("+++++++++++++ End  of Running Jpa Department repository ++++++++++++++");
     }
 
     @Test
     @Transactional
     public void runJpaRepositoryMethods() {
-        departmentRepository.save(new Department("Humanities"));
+        Department savedDeptHuman = departmentRepository.save(new Department("Humanities"));
         //flush all pending changes into database. (persisting changes of persistence context into db)
         departmentRepository.flush();
 
@@ -43,13 +50,9 @@ public class DepartmentRepositoryTest {
         System.out.println("\n************3 Departments****************");
         departmentRepository.findAll().forEach(System.out::println);
 
-        departmentRepository.deleteInBatch(departmentRepository.findAll().subList(0, 1));//fromIndex(Inclusive),toIndex(exclusive)
-        System.out.println("count : " + departmentRepository.count());
-        System.out.println("\n********* what left **********");
-        departmentRepository.findAll().forEach(System.out::println);
+        departmentRepository.deleteInBatch(departmentRepository.findAllById(Arrays.asList(savedDeptHuman.getId())));//fromIndex(Inclusive),toIndex(exclusive)
+        System.out.println("Can we find savedDeptHumanity? " +departmentRepository.findById(savedDeptHuman.getId()));
 
-        departmentRepository.deleteAllInBatch();
-        System.out.println("\n********* nothing left **********");
         departmentRepository.findAll().forEach(System.out::println);
         System.out.println("count : " + departmentRepository.count());
     }

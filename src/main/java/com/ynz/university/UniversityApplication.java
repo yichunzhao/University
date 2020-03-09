@@ -31,7 +31,6 @@ public class UniversityApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		//Students
-		boolean fullTime = true;
 		studentRepository.save(new Student("jane", "doe", true, 20));
 		studentRepository.save(new Student("john", "doe", true, 22));
 		studentRepository.save(new Student("mike", "smith", true, 18));
