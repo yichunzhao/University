@@ -2,7 +2,6 @@ package com.ynz.university.repo;
 
 import com.ynz.university.domain.Person;
 import com.ynz.university.domain.Student;
-import org.springframework.data.domain.Page;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
