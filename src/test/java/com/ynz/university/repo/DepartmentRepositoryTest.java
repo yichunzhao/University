@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +25,6 @@ public class DepartmentRepositoryTest {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Before
     @After
     public void setup() {
@@ -32,8 +32,8 @@ public class DepartmentRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void runJpaRepositoryMethods() {
-
         departmentRepository.save(new Department("Humanities"));
         //flush all pending changes into database. (persisting changes of persistence context into db)
         departmentRepository.flush();

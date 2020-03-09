@@ -36,6 +36,12 @@ public class Student {
     public Student() {
     }
 
+    public Student(Person person, boolean fullTime, int age) {
+        this.attendee = person;
+        this.fullTime = fullTime;
+        this.age = age;
+    }
+
     public Student(String firstName, String lastName, boolean fullTime, int age) {
         this.attendee = new Person(firstName, lastName);
         this.age = age;

@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Department")
-@EqualsAndHashCode
 @ToString
 public class Department {
     @Id
@@ -22,38 +21,51 @@ public class Department {
     @Size(max = 45)
     private String name;
 
-    @OneToMany(mappedBy = "department", targetEntity = Course.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department", targetEntity = Course.class, cascade = CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
+
+    //uni-directional
+    @OneToOne
+    @JoinColumn(name = "staff_id_fk", referencedColumnName = "staff_id")
+    private Staff chair;
 
     public Department() {
     }
 
-    public Department(String name) {
+    public Department(@Size(max = 45) String name) {
         this.name = name;
+    }
+
+    public Department(@Size(max = 45) String name, Staff chair) {
+        this.name = name;
+        this.chair = chair;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Set<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public Staff getChair() {
+        return chair;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCourse(Course course) {
+        this.courses.add(course);
+    }
+
+    public void setChair(Staff chair) {
+        this.chair = chair;
+    }
 }
