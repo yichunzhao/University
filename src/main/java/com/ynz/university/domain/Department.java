@@ -21,7 +21,7 @@ public class Department {
     @Size(max = 45)
     private String name;
 
-    @OneToMany(mappedBy = "department", targetEntity = Course.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department")
     private Set<Course> courses = new HashSet<>();
 
     //uni-directional

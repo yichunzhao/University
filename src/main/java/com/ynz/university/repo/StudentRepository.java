@@ -2,6 +2,7 @@ package com.ynz.university.repo;
 
 import com.ynz.university.domain.Person;
 import com.ynz.university.domain.Student;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends CrudRepository<Student, Integer> {
     //Simple Query Methods
+    //Property expression rules, keywords, clause
     // 1. return type 2. findBy 3. Entity attribute name (camel cases) 4. optionally, sub-attribute name
     // 5. query parameter matching the attribute type.
     List<Student> findByFullTime(boolean fullTime);
@@ -56,6 +58,9 @@ public interface StudentRepository extends CrudRepository<Student, Integer> {
     //Paginate the results
     // Page<T> findAll(Pageable pageable)
     //Appendix C: Repository query keywords
+
+    @Query(value = "select * from student s order by s.student_age limit 3", nativeQuery = true)
+    List<Student> findThreeYoungestStudents();
 
 
 }

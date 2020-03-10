@@ -48,7 +48,7 @@ public class StudentRepositoryTest {
         studentRepository.findByAgeLessThan(20).forEach(System.out::println);
 
         System.out.println("\n******age older than 21 year old:******* ");
-        studentRepository.findByAgeGreaterThan(21).forEach(System.out::println);
+        studentRepository.findByAgeGreaterThan(19).forEach(System.out::println);
 
         System.out.println("\n*****top 3 older than 15 year old:******");
         studentRepository.findTop3ByAgeGreaterThanOrderByAgeDesc(15).forEach(System.out::println);
@@ -64,6 +64,12 @@ public class StudentRepositoryTest {
 
         System.out.println("\n****student last name like ki ");
         studentRepository.findByAttendeeLastNameLike("ki%").forEach(System.out::println);
+
+        System.out.println("\n****find student by name ignoring case");
+        studentRepository.findByAttendeeLastNameIgnoreCase("KIM").forEach(System.out::println);
+
+        Student found = studentRepository.findByAttendeeFirstNameAndAttendeeLastName("jane","doe");
+        System.out.println("find by full name: "+ found);
 
         System.out.println("\n****find full time student  ");
         studentRepository.findByFullTime(true).forEach(System.out::println);

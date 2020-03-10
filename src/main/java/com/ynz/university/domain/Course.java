@@ -1,5 +1,6 @@
 package com.ynz.university.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.util.Set;
 //Plain old java object(POJO)
 @Entity
 @Table(name = "Course")
-@ToString()
+
 public class Course {
     @Id
     @GeneratedValue
@@ -24,7 +25,7 @@ public class Course {
     @Column
     private int credits;
 
-    @ToString.Exclude
+
     @ManyToMany
     @JoinTable(name = "course_course",
             joinColumns = @JoinColumn(name = "course_id_fk"),
@@ -32,20 +33,22 @@ public class Course {
     )
     private Set<Course> prerequisites = new HashSet<>();
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "prerequisites")
+
+    //@ManyToMany(mappedBy = "prerequisites")
+    @ManyToMany
+    @JsonIgnore
     private Set<Course> courses = new HashSet<>();
 
-    @ToString.Exclude
+
     @ManyToOne
     @JoinColumn(name = "course_dept_id")
     private Department department;
 
-    @ToString.Exclude
+
     @ManyToMany(mappedBy = "courses")
     private Set<Student> courseStudents = new HashSet<>();
 
-    @ToString.Exclude
+
     @OneToOne
     @JoinColumn(name = "staff_id_fk", referencedColumnName = "staff_id")
     private Staff instructor;
@@ -123,5 +126,17 @@ public class Course {
 
     public void setInstructor(Staff instructor) {
         this.instructor = instructor;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", credits=" + credits +
+                ", prerequisites=" + prerequisites +
+                ", courses=" + courses +
+                ", department=" + department +
+                '}';
     }
 }
