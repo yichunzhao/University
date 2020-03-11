@@ -1,6 +1,5 @@
 package com.ynz.university.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Department")
-@ToString
+@ToString(exclude = "courses")
 public class Department {
     @Id
     @GeneratedValue
@@ -21,7 +20,7 @@ public class Department {
     @Size(max = 45)
     private String name;
 
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department", targetEntity = Course.class)
     private Set<Course> courses = new HashSet<>();
 
     //uni-directional
@@ -68,4 +67,5 @@ public class Department {
     public void setChair(Staff chair) {
         this.chair = chair;
     }
+
 }

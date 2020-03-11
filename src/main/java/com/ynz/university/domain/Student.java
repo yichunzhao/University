@@ -31,7 +31,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id_fk", referencedColumnName = "student_id"),//owning side
             inverseJoinColumns = @JoinColumn(name = "course_id_fk", referencedColumnName = "course_id")//inverse side
     )
-    private List<Course> courses = new ArrayList<>();
+    private List<Course> studentCourses = new ArrayList<>();
 
     public Student() {
     }
@@ -64,8 +64,8 @@ public class Student {
         return age;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Course> getStudentCourses() {
+        return studentCourses;
     }
 
     public void setAttendee(Person attendee) {
@@ -80,7 +80,7 @@ public class Student {
         this.age = age;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setStudentCourses(List<Course> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 }

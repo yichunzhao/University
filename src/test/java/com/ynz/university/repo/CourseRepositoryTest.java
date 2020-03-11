@@ -38,18 +38,27 @@ public class CourseRepositoryTest {
 
     @Test
     @Transactional
-    @Ignore
     public void showAllCourses() {
         System.out.println("++++++++++ all courses +++++++++++++");
         courseRepository.findAll().forEach(System.out::println);
     }
 
     @Test
+    @Transactional
     public void testQueryByMethodName() {
         System.out.println("\n++++++ found course: ++++++ \n" + courseRepository.findByName("Chemistry"));
 
         System.out.println("\n++++++find courses by dane's last name+++++\n");
         courseRepository.findByDepartmentChairPersonStaffLastName("Jones").forEach(System.out::println);
+    }
+
+    @Test
+    public void testCourseToString(){
+        Course found = courseRepository.findByName("Chemistry");
+        found.getCourses();
+        found.getCourseStudents();
+        found.getDepartment();
+        found.toString();
     }
 
     @Test

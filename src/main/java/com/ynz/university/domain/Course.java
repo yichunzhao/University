@@ -1,17 +1,14 @@
 package com.ynz.university.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-//Plain old java object(POJO)
 @Entity
 @Table(name = "Course")
-
+@NoArgsConstructor
 public class Course {
     @Id
     @GeneratedValue
@@ -19,42 +16,31 @@ public class Course {
     private Integer id;
 
     @Column(name = "course_name")
-    @Size(max = 255)
     private String name;
 
     @Column
     private int credits;
 
+    @ManyToOne
+    @JoinColumn(name = "course_dept_id")
+    private Department department;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "studentCourses", targetEntity = Student.class, fetch = FetchType.EAGER)
+    private Set<Student> courseStudents = new HashSet<>();
+
+    @OneToOne
+    @JoinColumn(name = "staff_id_fk", referencedColumnName = "staff_id")
+    private Staff instructor;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "course_course",
             joinColumns = @JoinColumn(name = "course_id_fk"),
             inverseJoinColumns = @JoinColumn(name = "prerequisite_id_fk")
     )
     private Set<Course> prerequisites = new HashSet<>();
 
-
-    //@ManyToMany(mappedBy = "prerequisites")
-    @ManyToMany
-    @JsonIgnore
+    @ManyToMany(mappedBy = "prerequisites", fetch = FetchType.EAGER)
     private Set<Course> courses = new HashSet<>();
-
-
-    @ManyToOne
-    @JoinColumn(name = "course_dept_id")
-    private Department department;
-
-
-    @ManyToMany(mappedBy = "courses")
-    private Set<Student> courseStudents = new HashSet<>();
-
-
-    @OneToOne
-    @JoinColumn(name = "staff_id_fk", referencedColumnName = "staff_id")
-    private Staff instructor;
-
-    public Course() {
-    }
 
     public Course(String name, Integer credits, Staff instructor, Department department) {
         this.name = name;
@@ -135,8 +121,9 @@ public class Course {
                 ", name='" + name + '\'' +
                 ", credits=" + credits +
                 ", prerequisites=" + prerequisites +
-                ", courses=" + courses +
                 ", department=" + department +
                 '}';
     }
+
+
 }
