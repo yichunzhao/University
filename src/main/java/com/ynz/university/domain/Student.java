@@ -1,6 +1,7 @@
 package com.ynz.university.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "STUDENT")
+@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class Student {
@@ -32,9 +34,6 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id_fk", referencedColumnName = "course_id")//inverse side
     )
     private List<Course> studentCourses = new ArrayList<>();
-
-    public Student() {
-    }
 
     public Student(Person person, boolean fullTime, int age) {
         this.attendee = person;

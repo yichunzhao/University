@@ -12,9 +12,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
+
+/**
+ * Staff repository extends from PagingAndSortingRepository
+ */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,11 +36,21 @@ public class StaffRepositoryTest {
     }
 
     @Test
-    public void pagingAndSortingQueries(){
-        Iterable<Staff> staffs = staffRepository.findAll(Sort.by(Sort.Direction.DESC,"personStaff.lastName"));
+    public void demoJpaSortingQueries() {
+        Iterable<Staff> staffs = staffRepository.findAll(Sort.by(Sort.Direction.DESC, "personStaff.lastName"));
         staffs.forEach(System.out::println);
     }
 
+    @Test
+    public void testJpaPagingSoringQueries() {
+        Page<Staff> pageStaff = staffRepository.findAll(PageRequest.of(0, 4));
+        assertNotNull(pageStaff);
+        assertThat(pageStaff.getSize(), is(4));
+
+        Page<Staff> pageStaffSorted = staffRepository.findAll(PageRequest.of(0, 4, Sort.Direction.ASC, "personStaff.lastName"));
+        boolean match = pageStaffSorted.get().map(s->s.getPersonStaff().getLastName()).anyMatch(lastName -> lastName.startsWith("B"));
+        assertTrue(match);
+    }
 
 
 }

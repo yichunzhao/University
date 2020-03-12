@@ -1,15 +1,13 @@
 package com.ynz.university.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Staff_Table")
 @EqualsAndHashCode
+@NoArgsConstructor
 @ToString
 public class Staff {
     @Id
@@ -22,9 +20,6 @@ public class Staff {
     @Getter
     @Setter
     private Person personStaff;
-
-    public Staff() {
-    }
 
     public Staff(Person person) {
         this.personStaff = person;
