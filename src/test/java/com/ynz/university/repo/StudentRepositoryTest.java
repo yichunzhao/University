@@ -18,14 +18,14 @@ public class StudentRepositoryTest {
 
     @Test
     @Transactional
-    public void simpleStudentCrudExample() {
-        studentRepository.save(new Student("jane", "Abram", true, 20));
-        studentRepository.save(new Student("john", "Kent", true, 22));
-        studentRepository.save(new Student("mike", "Landon", true, 19));
-        studentRepository.save(new Student("ally", "Harley", false, 18));
-
+    public void demoSimpleStudentCrudExample() {
         System.out.println("\n********Original Students *******");
-        studentRepository.findAll().forEach(e -> System.out.println(e));
+
+        System.out.println("\n++++++++ show all students without enrolled courses, for it is lazy loaded. +++++");
+        studentRepository.findAll().forEach(System.out::println);
+
+        System.out.println("\n+++++++ show all student's enrolled courses. ++++++");
+        studentRepository.findByAttendeeFirstNameAndAttendeeLastName("jane", "doe").getEnrolledCourses().forEach(System.out::println);
 
         //age up the students(age+=1)
         studentRepository.findAll().forEach(student -> {
@@ -40,8 +40,8 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    @Transactional
-    public void usingSpringMethodNameQuery(){
+    //@Transactional
+    public void demoSpringMethodNameQuery() {
         System.out.println("total amount student: " + studentRepository.count());
 
         System.out.println("\n******age less than 20 year old:******* ");
@@ -68,8 +68,8 @@ public class StudentRepositoryTest {
         System.out.println("\n****find student by name ignoring case");
         studentRepository.findByAttendeeLastNameIgnoreCase("KIM").forEach(System.out::println);
 
-        Student found = studentRepository.findByAttendeeFirstNameAndAttendeeLastName("jane","doe");
-        System.out.println("find by full name: "+ found);
+        Student found = studentRepository.findByAttendeeFirstNameAndAttendeeLastName("jane", "doe");
+        System.out.println("find by full name: " + found);
 
         System.out.println("\n****find full time student  ");
         studentRepository.findByFullTime(true).forEach(System.out::println);

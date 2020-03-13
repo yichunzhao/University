@@ -89,4 +89,10 @@ public class CourseRepositoryTest {
         assertThat(b, is(true));
     }
 
+    @Test
+    public void testEagerFetchedDepartmentCourses() {
+        List<Course> found = courseRepository.findByCredits(3);
+        found.stream().map(f -> f.getDepartment().getCourses()).forEach(c -> assertNotNull(c));
+    }
+
 }

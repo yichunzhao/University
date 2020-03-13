@@ -2,7 +2,6 @@ package com.ynz.university.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 @Table(name = "STUDENT")
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString
+
 public class Student {
     @Id
     @GeneratedValue //default strategy is auto
@@ -28,12 +27,12 @@ public class Student {
     @Column(name = "student_age")
     private int age;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "student_course", //join table name
             joinColumns = @JoinColumn(name = "student_id_fk", referencedColumnName = "student_id"),//owning side
             inverseJoinColumns = @JoinColumn(name = "course_id_fk", referencedColumnName = "course_id")//inverse side
     )
-    private List<Course> studentCourses = new ArrayList<>();
+    private List<Course> enrolledCourses = new ArrayList<>();
 
     public Student(Person person, boolean fullTime, int age) {
         this.attendee = person;
@@ -63,8 +62,8 @@ public class Student {
         return age;
     }
 
-    public List<Course> getStudentCourses() {
-        return studentCourses;
+    public List<Course> getEnrolledCourses() {
+        return enrolledCourses;
     }
 
     public void setAttendee(Person attendee) {
@@ -79,7 +78,18 @@ public class Student {
         this.age = age;
     }
 
-    public void setStudentCourses(List<Course> studentCourses) {
-        this.studentCourses = studentCourses;
+    public void setEnrolledCourses(List<Course> enrolledCourses) {
+        this.enrolledCourses = enrolledCourses;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", attendee=" + attendee +
+                ", fullTime=" + fullTime +
+                ", age=" + age +
+                //", studentCourses=" + enrolledCourses +
+                '}';
     }
 }

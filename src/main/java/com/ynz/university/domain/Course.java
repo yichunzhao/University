@@ -25,7 +25,7 @@ public class Course {
     @JoinColumn(name = "course_dept_id")
     private Department department;
 
-    @ManyToMany(mappedBy = "studentCourses", targetEntity = Student.class, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "enrolledCourses", targetEntity = Student.class, fetch = FetchType.EAGER)
     private Set<Student> courseStudents = new HashSet<>();
 
     @OneToOne

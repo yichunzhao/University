@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * JpaRepository has two features
  * 1. query by paging and sorting
- * 2. query by Example.
+ * 2. query by Example. extending from QueryByExampleExecutor<T>
  */
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
