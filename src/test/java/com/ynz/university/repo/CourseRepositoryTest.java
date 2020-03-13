@@ -25,6 +25,9 @@ public class CourseRepositoryTest {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     @Before
     public void setup() {
         System.out.println("+++++++++++++ start to run CourseRepositoryTest +++++++++++++ ");
@@ -45,7 +48,10 @@ public class CourseRepositoryTest {
     @Test
     public void testQueryByMethodName() {
         System.out.println("\n++++++find courses by dane's last name+++++\n");
-        courseRepository.findByDepartmentChairPersonStaffLastName("Jones").forEach(System.out::println);
+
+        List<Course> courses = courseRepository.findByDepartmentChairPersonStaffLastName("Jones");
+        assertNotNull(courses);
+
         System.out.println("\n++++++end of finding courses by dane's last name+++++\n");
     }
 
@@ -82,9 +88,10 @@ public class CourseRepositoryTest {
     }
 
     @Test
-    public void testQueryAllByPaging() {
+    public void testQueryAllCredit3WithPaging() {
         Page<Course> page = courseRepository.findByCredits(3, PageRequest.of(0, 3, Sort.Direction.ASC, "name"));
         assertThat(page.getContent().size(), is(3));
+
         boolean b = page.get().map(course -> course.getName()).anyMatch(n -> n.startsWith("A"));
         assertThat(b, is(true));
     }

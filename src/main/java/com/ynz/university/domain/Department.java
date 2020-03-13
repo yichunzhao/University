@@ -1,5 +1,6 @@
 package com.ynz.university.domain;
 
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Department")
 @ToString(exclude = "courses")
+@NoArgsConstructor
 public class Department {
     @Id
     @GeneratedValue
@@ -27,9 +29,6 @@ public class Department {
     @OneToOne
     @JoinColumn(name = "staff_id_fk", referencedColumnName = "staff_id")
     private Staff chair;
-
-    public Department() {
-    }
 
     public Department(@Size(max = 45) String name) {
         this.name = name;

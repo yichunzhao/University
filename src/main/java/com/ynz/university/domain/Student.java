@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "STUDENT")
 @NoArgsConstructor
 @EqualsAndHashCode
-
 public class Student {
     @Id
     @GeneratedValue //default strategy is auto

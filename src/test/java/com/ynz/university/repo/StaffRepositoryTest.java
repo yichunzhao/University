@@ -52,5 +52,10 @@ public class StaffRepositoryTest {
         assertTrue(match);
     }
 
+    @Test
+    public void demoQueryDsl(){
+        
+    }
+
 
 }
